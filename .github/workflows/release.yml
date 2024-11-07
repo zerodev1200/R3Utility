@@ -1,0 +1,77 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+env:
+  DOTNET_VERSION: 8.0.x
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Verify commit exists in origin/main
+      run: |
+        git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+        git branch --remote --contains | grep origin/main
+    
+    - name: Set VERSION variable from tag
+      id: set-version
+      run: |
+        $version = $env:GITHUB_REF -replace 'refs/tags/v',''
+        echo "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        echo "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+    
+    - name: Build
+      run: dotnet build --configuration Release /p:Version=${VERSION}
+    
+    - name: Test
+      run: dotnet test --configuration Release /p:Version=${VERSION} --no-build
+    
+    - name: Pack
+      run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output ./publish
+
+  publish:
+    needs: build
+    runs-on: windows-latest
+    steps:
+    - name: Push to NuGet
+      run: dotnet nuget push "./publish/*.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+  create-release:
+    needs: [build, publish]
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Get Full Changelog
+      id: changelog
+      run: |
+        git fetch --prune --unshallow
+        CHANGELOG=$(git log --oneline --decorate --pretty=format:"- %s by %an" origin/main..HEAD)
+        echo "changelog=$CHANGELOG" >> $GITHUB_ENV
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Release ${{ needs.build.outputs.version }}
+        body: |
+          ## Full Change Log
+          ${{ env.changelog }}
+        token: ${{ secrets.RELEASE_CREATE_GITHUB_KEY }}
