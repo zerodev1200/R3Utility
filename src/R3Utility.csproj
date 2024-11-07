@@ -7,11 +7,13 @@
 		<LangVersion>12</LangVersion>
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="R3" Version="1.2.9" />
-
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework) == 'netstandard2.0' Or $(TargetFramework) == 'netstandard2.1'">
@@ -23,5 +25,16 @@
 
 	<ItemGroup>
 	  <Folder Include="ObservableCollections\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>
