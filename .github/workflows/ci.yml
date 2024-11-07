@@ -1,21 +1,21 @@
-name: Publish to Nuget
+name: test
 
-  on:
+on:
   push:
     branches:
       - main
   pull_request:
     branches:
       - main
-  
-jobs: 
-  build: 
-    runs-on: windows-latest 
+
+jobs:
+  build:
+    runs-on: windows-latest
     timeout-minutes: 15
-    steps: 
-    - name: Checkout 
-      uses: actions/checkout@v4
-    - name: Build 
-      run: dotnet build --configuration Release 
-    - name: Test 
-      run: dotnet test --configuration Release --no-build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Test
+        run: dotnet test --configuration Release --no-build
