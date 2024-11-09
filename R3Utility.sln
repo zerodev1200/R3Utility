@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R3Utility", "src\R3Utility.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "sandbox\WpfApp1\WpfApp1.csproj", "{F1DD744B-A892-4D96-ADDB-E5865DD79C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R3Utility.Tests", "Tests\R3Utility.Tests\R3Utility.Tests.csproj", "{1D084A39-4771-4D34-A302-B13BB4DDA8C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R3Utility.Tests", "Tests\R3Utility.Tests\R3Utility.Tests.csproj", "{1D084A39-4771-4D34-A302-B13BB4DDA8C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,7 +22,6 @@ Global
 		{F1DD744B-A892-4D96-ADDB-E5865DD79C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1DD744B-A892-4D96-ADDB-E5865DD79C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1DD744B-A892-4D96-ADDB-E5865DD79C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1DD744B-A892-4D96-ADDB-E5865DD79C11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D084A39-4771-4D34-A302-B13BB4DDA8C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D084A39-4771-4D34-A302-B13BB4DDA8C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D084A39-4771-4D34-A302-B13BB4DDA8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU

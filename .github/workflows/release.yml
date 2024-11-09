@@ -44,9 +44,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Push to NuGet
-      run: dotnet nuget push "./publish/*.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
-      env:
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push "./publish/*.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
 
   create-release:
     needs: [build, publish]
