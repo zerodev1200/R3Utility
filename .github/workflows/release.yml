@@ -37,13 +37,15 @@ jobs:
         run: dotnet test --configuration Release -p:Version=${{ env.VERSION }} --no-build
         
       - name: Pack
-        run: dotnet pack --configuration Release -p:Version=${{ env.VERSION }} --no-build --output ./publish
-        
+        run: |
+          dotnet pack --configuration Release -p:Version=${{ env.VERSION }} --no-build --output ./publish
+          dir ./publish
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: nuget-package
-          path: ./publish/*.nupkg
+          path: ./publish
 
   publish:
     needs: build
@@ -54,6 +56,11 @@ jobs:
         with:
           name: nuget-package
           path: ./publish
+          
+      - name: List downloaded files
+        run: |
+          dir
+          dir ./publish
           
       - name: Push to NuGet
         run: dotnet nuget push "./publish/*.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
