@@ -1,6 +1,6 @@
 # R3Utility
 
-A utility library for R3 that provides enhanced reactive programming capabilities, focusing on validation and property binding.
+A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides enhanced reactive programming capabilities, focusing on validation and property binding.
 
 ## Features
 
