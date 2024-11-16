@@ -45,20 +45,20 @@ public static class ObservableCollectionsExtensions
     }
 
     /// <summary>
-    /// Observes a specific property of each element in a collection and provides a sequence of property values.
+    /// Observes specified properties of each element in a collection and provides a sequence of the observed property values.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    /// <typeparam name="TProperty1">The type of the property being observed.</typeparam>
-    /// <typeparam name="TProperty2">The type of the property being observed.</typeparam>
-    /// <param name="source">The collection whose elements' properties are being observed.</param>
-    /// <param name="propertySelector1">An expression to select the property to observe from each element. must be a Func specifying a simple property. For example, it extracts "Foo" from `x => x.Foo`.</param>
-    /// <param name="propertySelector2">An expression to select the property to observe from each element. must be a Func specifying a simple property. For example, it extracts "Foo" from `x => x.Foo`.</param>
-    /// <param name="pushCurrentValueOnSubscribe">Specifies whether the current property value should be pushed immediately upon subscription. Defaults to <c>true</c>.</param>
-    /// <param name="cancellationToken">A token to observe while waiting for task completion. Defaults to <c>CancellationToken.None</c>.</param>
-    /// <param name="propertySelector1Expr">The expression text for the property selector, provided automatically by the compiler. This parameter is optional.</param>
-    /// <param name="propertySelector2Expr">The expression text for the property selector, provided automatically by the compiler. This parameter is optional.</param>
-    /// <returns>An observable sequence of <see cref="PropertyPack{T, TProperty}"/> objects containing the observed property values.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <typeparam name="TProperty1">The type of the first property being observed.</typeparam>
+    /// <typeparam name="TProperty2">The type of the second property being observed.</typeparam>
+    /// <param name="source">The collection whose elements' properties are observed.</param>
+    /// <param name="propertySelector1">A selector for the first property to observe, specified as a simple property accessor (e.g., <c>x => x.Foo</c>).</param>
+    /// <param name="propertySelector2">A selector for the second property to observe, specified as a simple property accessor.</param>
+    /// <param name="pushCurrentValueOnSubscribe">Indicates whether the current property value should be emitted immediately upon subscription. Defaults to <c>true</c>.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the observation. Defaults to <c>CancellationToken.None</c>.</param>
+    /// <param name="propertySelector1Expr">The source expression for <paramref name="propertySelector1"/>, provided automatically by the compiler. Optional.</param>
+    /// <param name="propertySelector2Expr">The source expression for <paramref name="propertySelector2"/>, provided automatically by the compiler. Optional.</param>
+    /// <returns>An observable sequence of <see cref="PropertyPack{T, TProperty2}"/> objects representing the observed property values.</returns>
+    /// <exception cref="ArgumentNullException" />
     public static Observable<PropertyPack<T, TProperty2>> ObserveElementProperty<T, TProperty1, TProperty2>(
         this IObservableCollection<T> source,
         Func<T, TProperty1?> propertySelector1,
@@ -95,23 +95,24 @@ public static class ObservableCollectionsExtensions
     }
 
     /// <summary>
-    /// Observes a specific property of each element in a collection and provides a sequence of property values.
+    /// Observes specified properties of each element in a collection and provides a sequence of the observed property values.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    /// <typeparam name="TProperty1">The type of the property being observed.</typeparam>
-    /// <typeparam name="TProperty2">The type of the property being observed.</typeparam>
-    /// <typeparam name="TProperty3">The type of the property being observed.</typeparam>
-    /// <param name="source">The collection whose elements' properties are being observed.</param>
-    /// <param name="propertySelector1">An expression to select the property to observe from each element. must be a Func specifying a simple property. For example, it extracts "Foo" from `x => x.Foo`.</param>
-    /// <param name="propertySelector2">An expression to select the property to observe from each element. must be a Func specifying a simple property. For example, it extracts "Foo" from `x => x.Foo`.</param>
-    /// <param name="propertySelector3">An expression to select the property to observe from each element. must be a Func specifying a simple property. For example, it extracts "Foo" from `x => x.Foo`.</param>
-    /// <param name="pushCurrentValueOnSubscribe">Specifies whether the current property value should be pushed immediately upon subscription. Defaults to <c>true</c>.</param>
-    /// <param name="cancellationToken">A token to observe while waiting for task completion. Defaults to <c>CancellationToken.None</c>.</param>
-    /// <param name="propertySelector1Expr">The expression text for the property selector, provided automatically by the compiler. This parameter is optional.</param>
-    /// <param name="propertySelector2Expr">The expression text for the property selector, provided automatically by the compiler. This parameter is optional.</param>
-    /// <param name="propertySelector3Expr">The expression text for the property selector, provided automatically by the compiler. This parameter is optional.</param>
-    /// <returns>An observable sequence of <see cref="PropertyPack{T, TProperty3}"/> objects containing the observed property values.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <typeparam name="TProperty1">The type of the first property being observed.</typeparam>
+    /// <typeparam name="TProperty2">The type of the second property being observed.</typeparam>
+    /// <typeparam name="TProperty3">The type of the third property being observed.</typeparam>
+    /// <param name="source">The collection whose elements' properties are observed.</param>
+    /// <param name="propertySelector1">A selector for the first property to observe, specified as a simple property accessor (e.g., <c>x => x.Foo</c>).</param>
+    /// <param name="propertySelector2">A selector for the second property to observe, specified as a simple property accessor.</param>
+    /// <param name="propertySelector3">A selector for the third property to observe, specified as a simple property accessor.</param>
+    /// <param name="pushCurrentValueOnSubscribe">Indicates whether the current property value should be emitted immediately upon subscription. Defaults to <c>true</c>.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the observation. Defaults to <c>CancellationToken.None</c>.</param>
+    /// <param name="propertySelector1Expr">The source expression for <paramref name="propertySelector1"/>, provided automatically by the compiler. Optional.</param>
+    /// <param name="propertySelector2Expr">The source expression for <paramref name="propertySelector2"/>, provided automatically by the compiler. Optional.</param>
+    /// <param name="propertySelector3Expr">The source expression for <paramref name="propertySelector3"/>, provided automatically by the compiler. Optional.</param>
+    /// <returns>An observable sequence of <see cref="PropertyPack{T, TProperty3}"/> objects representing the observed property values.</returns>
+    /// <exception cref="ArgumentNullException" />
+
     public static Observable<PropertyPack<T, TProperty3>> ObserveElementProperty<T, TProperty1, TProperty2, TProperty3>(
         this IObservableCollection<T> source,
         Func<T, TProperty1?> propertySelector1,
