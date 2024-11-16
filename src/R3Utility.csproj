@@ -13,6 +13,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="ObservableCollections" Version="3.3.2" />
+		<PackageReference Include="ObservableCollections.R3" Version="3.3.2" />
 		<PackageReference Include="R3" Version="1.2.9" />
 	</ItemGroup>
 
@@ -21,10 +23,6 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ObservableCollections\" />
 	</ItemGroup>
 
 	<ItemGroup>
