@@ -22,6 +22,8 @@ public class ReactivePropertyExtensionsTests
         bindable.Value = 100;
         testObject.Value.Should().Be(100);
         bindable.Value.Should().Be(100);
+
+        bindable.Dispose();
     }
 
     [Fact]
@@ -61,117 +63,32 @@ public class ReactivePropertyExtensionsTests
         outerObject.InnerObject.NestedStringValue = "zzz";
         outerObject.InnerObject.NestedStringValue.Should().Be("zzz");
         bindable2.Value.Should().Be("zzz");
+        bindable.Dispose();
     }
 
     [Fact]
     public void ToTwoWayBindableReactiveProperty_ThreeLevels_ShouldUpdateDeepNestedProperty()
     {
-        var deepInnerObject = new DeepInner { DeepNestedValue = "initial" };
+        var deepInnerObject = new DeepInner { DeepNestedStringValue = "initial" };
         var innerObject = new Inner { DeepInnerObject = deepInnerObject };
         var outerObject = new Outer { InnerObject = innerObject };
 
         var bindable = outerObject.ToTwoWayBindableReactiveProperty(
             x => x.InnerObject,
             y => y.DeepInnerObject,
-            z => z.DeepNestedValue,
+            z => z.DeepNestedStringValue,
             pushCurrentValueOnSubscribe: true);
 
-        outerObject.InnerObject.DeepInnerObject.DeepNestedValue.Should().Be("initial");
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.Should().Be("initial");
         bindable.Value.Should().Be("initial");
 
         bindable.Value = "updated";
-        outerObject.InnerObject.DeepInnerObject.DeepNestedValue.Should().Be("updated");
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.Should().Be("updated");
         bindable.Value.Should().Be("updated");
 
-        outerObject.InnerObject.DeepInnerObject.DeepNestedValue = "finish";
-        outerObject.InnerObject.DeepInnerObject.DeepNestedValue.Should().Be("finish");
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue = "finish";
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.Should().Be("finish");
         bindable.Value.Should().Be("finish");
-    }
-
-    // Helper classes for testing
-    public class TestClass : INotifyPropertyChanged
-    {
-        private int _value;
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public int Value
-        {
-            get => _value;
-            set
-            {
-                _value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-            }
-        }
-    }
-
-    public class Outer : INotifyPropertyChanged
-    {
-        private Inner? _innerObject;
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public Inner? InnerObject
-        {
-            get => _innerObject;
-            set
-            {
-                _innerObject = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InnerObject)));
-            }
-        }
-    }
-
-    public class Inner : INotifyPropertyChanged
-    {
-        private int _nestedIntValue;
-        private string _nestedStringValue = "";
-        private DeepInner? _deepInnerObject;
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public int NestedIntValue
-        {
-            get => _nestedIntValue;
-            set
-            {
-                _nestedIntValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NestedIntValue)));
-            }
-        }
-
-        public string NestedStringValue
-        {
-            get => _nestedStringValue;
-            set
-            {
-                _nestedStringValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NestedStringValue)));
-            }
-        }
-
-        public DeepInner? DeepInnerObject
-        {
-            get => _deepInnerObject;
-            set
-            {
-                _deepInnerObject = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeepInnerObject)));
-            }
-        }
-    }
-
-    public class DeepInner : INotifyPropertyChanged
-    {
-        private string _deepNestedValue = string.Empty;
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public string DeepNestedValue
-        {
-            get => _deepNestedValue;
-            set
-            {
-                _deepNestedValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeepNestedValue)));
-            }
-        }
+        bindable.Dispose();
     }
 }

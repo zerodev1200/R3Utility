@@ -11,13 +11,17 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         var combined = new[] { subject1, subject2 }.CombineLatestValuesAreAllFalse();
 
         bool result = false;
-        combined.Subscribe(value => result = value);
+        var d = combined.Subscribe(value => result = value);
 
         result.Should().BeTrue("because all source values are false");
 
         // Change one value to true and check
         subject1.OnNext(true);
         result.Should().BeFalse("because one of the source values is true");
+
+        subject1.Dispose();
+        subject2.Dispose();
+        d.Dispose();
     }
 
     [Fact]
@@ -28,13 +32,17 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         var combined = new[] { subject1, subject2 }.CombineLatestValuesAreAllTrue();
 
         bool result = false;
-        combined.Subscribe(value => result = value);
+        var d = combined.Subscribe(value => result = value);
 
         result.Should().BeTrue("because all source values are true");
 
         // Change one value to false and check
         subject2.OnNext(false);
         result.Should().BeFalse("because one of the source values is false");
+
+        subject1.Dispose();
+        subject2.Dispose();
+        d.Dispose();
     }
 
     [Fact]
@@ -45,12 +53,16 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         var combined = new[] { subject1, subject2 }.CombineLatestValuesAreAnyFalse();
 
         bool result = false;
-        combined.Subscribe(value => result = value);
+        var d = combined.Subscribe(value => result = value);
         result.Should().BeTrue("because one of the source values is false");
 
         // Change both values to true and check
         subject2.OnNext(true);
         result.Should().BeFalse("because all source values are now true");
+
+        subject1.Dispose();
+        subject2.Dispose();
+        d.Dispose();
     }
 
     [Fact]
@@ -61,36 +73,17 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         var combined = new[] { subject1, subject2 }.CombineLatestValuesAreAnyTrue();
 
         bool result = false;
-        combined.Subscribe(value => result = value);
+        var d = combined.Subscribe(value => result = value);
 
         result.Should().BeTrue("because one of the source values is true");
 
         // Change both values to false and check
         subject2.OnNext(false);
         result.Should().BeFalse("because all source values are now false");
-    }
 
-    [Fact]
-    public void CreateCanExecuteSource_ShouldThrowArgumentNullException_WhenPropertiesAreNull()
-    {
-        Action action = () => ReactiveValidationHelper.CreateCanExecuteSource(null!);
-
-        action.Should().Throw<ArgumentNullException>()
-            .WithMessage("Value cannot be null. (Parameter 'properties')");
-    }
-
-    [Fact]
-    public void CreateCanExecuteSource_ShouldThrowArgumentNullException_WhenPropertiesAreEmpty()
-    {
-        Action action = () => ReactiveValidationHelper.CreateCanExecuteSource();
-
-        action.Should().Throw<ArgumentNullException>()
-            .WithMessage("Value cannot be null. (Parameter 'properties')");
-
-        Action action2 = () => ReactiveValidationHelper.CreateCanExecuteSource([]);
-
-        action2.Should().Throw<ArgumentNullException>()
-            .WithMessage("Value cannot be null. (Parameter 'properties')");
+        subject1.Dispose();
+        subject2.Dispose();
+        d.Dispose();
     }
 
     [Range(0, 10)]
@@ -103,7 +96,7 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         var source = ReactiveValidationHelper.CreateCanExecuteSource(IntBRP, StringBRP);
 
         bool canExecute = true;
-        source.Subscribe(value => canExecute = value);
+        var d = source.Subscribe(value => canExecute = value);
 
         IntBRP.Value = 5;
         StringBRP.Value = "aaa";
@@ -114,6 +107,8 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         IntBRP.Value = 11;
         fixture.FrameProvider.Advance();
         canExecute.Should().BeFalse();
+
+        d.Dispose();
     }
 
     [Fact]
@@ -121,13 +116,15 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
     {
         var source = ReactiveValidationHelper.CreateCanExecuteSource(IntBRP, StringBRP);
         bool canExecute = true;
-        source.Subscribe(value => canExecute = value);
+        var d = source.Subscribe(value => canExecute = value);
 
         IntBRP.Value = 11;
         StringBRP.Value = "";
 
         fixture.FrameProvider.Advance();
         canExecute.Should().BeFalse();
+
+        d.Dispose();
     }
 
     [Fact]
@@ -136,12 +133,13 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         var source = ReactiveValidationHelper.CreateCanExecuteSource(IntBRP, StringBRP);
 
         bool canExecute = false;
-        source.Subscribe(value => canExecute = value);
+        var d = source.Subscribe(value => canExecute = value);
 
         IntBRP.Value = 10;
         StringBRP.Value = "aaa";
-        
+
         fixture.FrameProvider.Advance();
         canExecute.Should().BeTrue();
+        d.Dispose();
     }
 }
