@@ -3,6 +3,7 @@ using R3Utility;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+
 namespace WpfApp1;
 
 public class ViewModel
@@ -19,7 +20,6 @@ public class ViewModel
 
     public ViewModel()
     {
-
         var source = ReactiveValidationHelper.CreateCanExecuteSource(RP1, RP2, RP3);
         SubmitCommand = source.ToReactiveCommand(x =>
         {
@@ -80,20 +80,21 @@ public class ViewModel
         var bindable4 = outerObject.ToTwoWayBindableReactiveProperty(
             x => x.InnerObject,
             y => y.DeepInnerObject,
-            y => y.DeepNestedValue,
+            z => z.DeepNestedValue,
             pushCurrentValueOnSubscribe: true);
 
         bindable.Value = 1;
         bindable2.Value = "1";
-    }
 
+    }
 }
+
 public class Outer : INotifyPropertyChanged
 {
-    private Inner? _innerObject;
+    private Inner _innerObject = new();
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public Inner? InnerObject
+    public Inner InnerObject
     {
         get => _innerObject;
         set
@@ -108,7 +109,7 @@ public class Inner : INotifyPropertyChanged
 {
     private int _nestedIntValue;
     private string _nestedStringValue = "";
-    private DeepInner? _deepInnerObject;
+    private DeepInner _deepInnerObject = new();
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public int NestedIntValue
@@ -131,7 +132,7 @@ public class Inner : INotifyPropertyChanged
         }
     }
 
-    public DeepInner? DeepInnerObject
+    public DeepInner DeepInnerObject
     {
         get => _deepInnerObject;
         set

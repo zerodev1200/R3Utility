@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Controls;
-
+﻿
 namespace WpfApp1;
 internal class Item : BindableBase
 {
