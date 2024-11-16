@@ -13,6 +13,11 @@ A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides 
 - Combine multiple boolean observables with various logical operations
 - Support for creating executable command sources based on validation states
 
+### Observable Element Property Monitoring  *(New)*
+- Observe changes in specific properties of elements within a collection.
+- Customizable option, `pushCurrentValueOnSubscribe` to control initial value emission.
+- Support for deep property path binding (up to 3 levels)
+
 ## API Reference
 
 ### ReactivePropertyExtensions
@@ -32,6 +37,16 @@ A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides 
 | `CombineLatestValuesAreAnyFalse` | `IEnumerable<Observable<bool>>` | `Observable<bool>` | Combines multiple observables and returns true when any source value is false |
 | `CombineLatestValuesAreAnyTrue` | `IEnumerable<Observable<bool>>` | `Observable<bool>` | Combines multiple observables and returns true when any source value is true |
 | `CreateCanExecuteSource` | `IBindableReactiveProperty[]` | `Observable<bool>` | Creates an observable that monitors HasErrors property of multiple BindableReactiveProperty instances |
+
+
+### ObservableCollectionsExtensions
+
+| Method | Parameters | Return Type | Description |
+|--------|------------|-------------|-------------|
+| `ObserveElementProperty<T, TProperty>` | `IObservableCollection<T> source, Func<T, TProperty> propertySelector, bool pushCurrentValueOnSubscribe = true, CancellationToken cancellationToken = default` | `Observable<PropertyPack<T, TProperty>>` | Observes a specific property of each element in a collection and emits its values. |
+| `ObserveElementProperty<T, TProperty1, TProperty2>` | `IObservableCollection<T> source, Func<T, TProperty1?> propertySelector1, Func<TProperty1, TProperty2> propertySelector2, bool pushCurrentValueOnSubscribe = true, CancellationToken cancellationToken = default` | `Observable<PropertyPack<T, TProperty2>>` | Observes a nested property (2 levels) in a collection and emits its values. |
+| `ObserveElementProperty<T, TProperty1, TProperty2, TProperty3>` | `IObservableCollection<T> source, Func<T, TProperty1?> propertySelector1, Func<TProperty1, TProperty2> propertySelector2, Func<TProperty2, TProperty3> propertySelector3, bool pushCurrentValueOnSubscribe = true, CancellationToken cancellationToken = default` | `Observable<PropertyPack<T, TProperty3>>` | Observes a deeply nested property (3 levels) in a collection and emits its values. |
+
 
 ## Usage Examples
 
@@ -74,7 +89,25 @@ Observable<bool> canExecute = ReactiveValidationHelper.CreateCanExecuteSource(
 command = canExecute.ToReactiveCommand();
 ```
 
+### Observing Properties in a Collection
 
+```csharp
+using ObservableCollections;
+using R3;
+using R3Utility;
+
+ObservableList<Item> collection = [];
+Item item1 = new() { Name = "foo" };
+
+collection.Add(item1);
+var disposable = collection.ObserveElementProperty(x => x.Name, pushCurrentValueOnSubscribe: false)
+                           .Subscribe(property => Console.WriteLine($"Instance:{property.Instance}, propertyName:{property.PropertyName}, Value:{property.Value}"));
+        
+//Changes are output. `Instance:WpfApp1.Item, propertyName:Name, Value:bar`
+item1.Name = "bar";
+
+disposable.Dispose();
+```
 
 ## Installation
 
