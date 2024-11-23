@@ -1,6 +1,5 @@
 using R3;
 using System.ComponentModel;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace R3Utility;
@@ -12,7 +11,7 @@ public static class ReactivePropertyExtensions
     /// </summary>
     public static BindableReactiveProperty<TProperty> ToTwoWayBindableReactiveProperty<T, TProperty>(
         this T value,
-        Expression<Func<T, TProperty>> propertySelector,
+        Func<T, TProperty> propertySelector,
         bool pushCurrentValueOnSubscribe = true,
         CancellationToken cancellationToken = default,
         [CallerArgumentExpression(nameof(propertySelector))] string? expr = null)
@@ -22,13 +21,12 @@ public static class ReactivePropertyExtensions
 
         var propertyName = expr.Substring(expr.LastIndexOf('.') + 1);
 
-        var setter = AccessorCache<T>.LookupSet(propertySelector, propertyName);
+        var propertyInfo = AccessorCache<T>.GetCachedPropertyInfo(propertyName);
 
-        var rp = value.ObservePropertyChanged(propertySelector.Compile(), pushCurrentValueOnSubscribe, cancellationToken, expr)!
+        var rp = value.ObservePropertyChanged(propertySelector, pushCurrentValueOnSubscribe, cancellationToken, expr)!
                       .ToBindableReactiveProperty();
 
-        rp.Subscribe(x => setter(value, x!));
-
+        rp.Subscribe(x => propertyInfo?.SetValue(value, x));
         return rp!;
     }
 
