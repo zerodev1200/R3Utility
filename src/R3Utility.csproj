@@ -10,6 +10,11 @@
 
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Authors>zerodev1200</Authors>
+		<Company>zerodev1200</Company>
+		<PackageProjectUrl>https://github.com/zerodev1200/R3Utility</PackageProjectUrl>
+		<Description>A utility library for Cysharp/R3 that provides enhanced reactive programming capabilities, focusing on validation and property binding.</Description>
+		<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,13 +31,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="..\icon.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 </Project>
