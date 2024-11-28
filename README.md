@@ -1,5 +1,6 @@
 # R3Utility
-
+[![Nuget downloads](https://img.shields.io/nuget/v/R3Utility.svg)](https://www.nuget.org/packages/R3Utility)
+[![NuGet](https://img.shields.io/nuget/dt/R3Utility.svg)](https://www.nuget.org/packages/R3Utility)  
 A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides enhanced reactive programming capabilities, focusing on validation and property binding.
 
 ## Features
