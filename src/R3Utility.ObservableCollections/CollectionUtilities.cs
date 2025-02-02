@@ -2,7 +2,7 @@
 using R3;
 using System.Collections.Specialized;
 
-namespace R3Utility;
+namespace R3Utility.ObservableCollections;
 internal static class CollectionUtilities
 {
     /// <summary>

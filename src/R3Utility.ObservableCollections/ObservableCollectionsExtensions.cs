@@ -3,7 +3,7 @@ using R3;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace R3Utility;
+namespace R3Utility.ObservableCollections;
 public static class ObservableCollectionsExtensions
 {
     /// <summary>

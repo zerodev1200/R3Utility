@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R3Utility", "src\R3Utility.csproj", "{F12BBFBC-2970-4F66-A48C-D2B175F977E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R3Utility", "src\R3Utility\R3Utility.csproj", "{F12BBFBC-2970-4F66-A48C-D2B175F977E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "sandbox\WpfApp1\WpfApp1.csproj", "{F1DD744B-A892-4D96-ADDB-E5865DD79C11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R3Utility.Tests", "Tests\R3Utility.Tests\R3Utility.Tests.csproj", "{1D084A39-4771-4D34-A302-B13BB4DDA8C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R3Utility.ObservableCollections", "src\R3Utility.ObservableCollections\R3Utility.ObservableCollections.csproj", "{723B972A-B49D-4CA5-8294-D4108228D0C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{1D084A39-4771-4D34-A302-B13BB4DDA8C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D084A39-4771-4D34-A302-B13BB4DDA8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D084A39-4771-4D34-A302-B13BB4DDA8C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723B972A-B49D-4CA5-8294-D4108228D0C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723B972A-B49D-4CA5-8294-D4108228D0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723B972A-B49D-4CA5-8294-D4108228D0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723B972A-B49D-4CA5-8294-D4108228D0C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

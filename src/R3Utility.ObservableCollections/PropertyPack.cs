@@ -1,5 +1,5 @@
 ﻿
-namespace R3Utility;
+namespace R3Utility.ObservableCollections;
 
 /// <summary>
 /// Represents property and instance package.
