@@ -29,9 +29,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\R3Utility.csproj" />
-		<ProjectReference Include="..\..\src\R3Utility.ObservableCollections\R3Utility.ObservableCollections.csproj" />
 		<ProjectReference Include="..\..\src\R3Utility\R3Utility.csproj" />
+		<ProjectReference Include="..\..\src\R3Utility.ObservableCollections\R3Utility.ObservableCollections.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

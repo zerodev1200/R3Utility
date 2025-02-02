@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\R3Utility.csproj" />
+    <ProjectReference Include="..\..\src\R3Utility\R3Utility.csproj" />
   </ItemGroup>
 
 </Project>
