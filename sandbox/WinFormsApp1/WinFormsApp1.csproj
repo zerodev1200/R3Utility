@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<ApplicationVisualStyles>true</ApplicationVisualStyles>
+		<ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+		<ApplicationDefaultFont>Yu Gothic UI, 14pt</ApplicationDefaultFont>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\R3Utility.WinForms\R3Utility.WinForms.csproj" />
+	</ItemGroup>
+
+</Project>
