@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+
+		<Authors>zerodev1200</Authors>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageProjectUrl>https://github.com/zerodev1200/R3Utility</PackageProjectUrl>
+		<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+	</PropertyGroup>
+</Project>
