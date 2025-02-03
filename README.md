@@ -1,7 +1,19 @@
-# R3Utility
+﻿# R3Utility
 [![Nuget downloads](https://img.shields.io/nuget/v/R3Utility.svg)](https://www.nuget.org/packages/R3Utility)
 [![NuGet](https://img.shields.io/nuget/dt/R3Utility.svg)](https://www.nuget.org/packages/R3Utility)  
-A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides enhanced reactive programming capabilities, focusing on validation and property binding.
+A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides enhanced reactive programming capabilities, focusing on validation, property binding, and UI event observation.
+
+## 🚨 Breaking Changes (v0.3.0)
+
+Starting from version 0.3.0, `ObservableCollectionsExtensions` has been moved to a separate package: [R3Utility.ObservableCollections](https://www.nuget.org/packages/R3Utility.ObservableCollections).
+If you were using `ObserveElementProperty`, please install the new package and update your imports accordingly.
+
+```
+dotnet add package R3Utility.ObservableCollections
+```
+```
+using R3Utility.ObservableCollections;
+```
 
 ## Features
 
@@ -14,10 +26,14 @@ A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides 
 - Combine multiple boolean observables with various logical operations
 - Support for creating executable command sources based on validation states
 
-### Observable Element Property Monitoring  *(New)*
+### Observable Element Property Monitoring  (R3Utility.ObservableCollections)
 - Observe changes in specific properties of elements within a collection.
 - Customizable option, `pushCurrentValueOnSubscribe` to control initial value emission.
 - Support for deep property path binding (up to 3 levels)
+
+### WinForms UI Event Observables (R3Utility.WinForms)
+- Convert common UI events into observables
+- Supports `TextBox`, `Button`, `CheckBox`, `ComboBox`, and `Control` drag-and-drop events
 
 ## API Reference
 
@@ -40,7 +56,7 @@ A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides 
 | `CreateCanExecuteSource` | `IBindableReactiveProperty[]` | `Observable<bool>` | Creates an observable that monitors HasErrors property of multiple BindableReactiveProperty instances |
 
 
-### ObservableCollectionsExtensions
+### ObservableCollectionsExtensions(R3Utility.ObservableCollections)
 
 | Method | Parameters | Return Type | Description |
 |--------|------------|-------------|-------------|
@@ -48,6 +64,19 @@ A utility library for [Cysharp/R3](https://github.com/Cysharp/R3) that provides 
 | `ObserveElementProperty<T, TProperty1, TProperty2>` | `IObservableCollection<T> source, Func<T, TProperty1?> propertySelector1, Func<TProperty1, TProperty2> propertySelector2, bool pushCurrentValueOnSubscribe = true, CancellationToken cancellationToken = default` | `Observable<PropertyPack<T, TProperty2>>` | Observes a nested property (2 levels) in a collection and emits its values. |
 | `ObserveElementProperty<T, TProperty1, TProperty2, TProperty3>` | `IObservableCollection<T> source, Func<T, TProperty1?> propertySelector1, Func<TProperty1, TProperty2> propertySelector2, Func<TProperty2, TProperty3> propertySelector3, bool pushCurrentValueOnSubscribe = true, CancellationToken cancellationToken = default` | `Observable<PropertyPack<T, TProperty3>>` | Observes a deeply nested property (3 levels) in a collection and emits its values. |
 
+### WinForms UIComponentExtensions (R3Utility.WinForms)
+
+| Method | Parameters | Return Type | Description |
+|--------|------------|-------------|-------------|
+| `TextChangedAsObservable` | `TextBoxBase textBox` | `Observable<EventArgs>` | Observes `TextChanged` event of a `TextBoxBase`. |
+| `ClickAsObservable` | `Button button` | `Observable<EventArgs>` | Observes `Click` event of a `Button`. |
+| `CheckedChangedAsObservable` | `CheckBox checkBox` | `Observable<EventArgs>` | Observes `CheckedChanged` event of a `CheckBox`. |
+| `SelectedIndexChangedAsObservable` | `ComboBox comboBox` | `Observable<EventArgs>` | Observes `SelectedIndexChanged` event of a `ComboBox`. |
+| `SelectionChangeCommittedAsObservable` | `ComboBox comboBox` | `Observable<EventArgs>` | Observes `SelectionChangeCommitted` event of a `ComboBox`. |
+| `DragEnterAsObservable` | `Control control` | `Observable<DragEventArgs>` | Observes `DragEnter` event of a `Control`. |
+| `DragOverAsObservable` | `Control control` | `Observable<DragEventArgs>` | Observes `DragOver` event of a `Control`. |
+| `DragLeaveAsObservable` | `Control control` | `Observable<EventArgs>` | Observes `DragLeave` event of a `Control`. |
+| `DragDropAsObservable` | `Control control` | `Observable<DragEventArgs>` | Observes `DragDrop` event of a `Control`. |
 
 ## Usage Examples
 
@@ -95,7 +124,7 @@ command = canExecute.ToReactiveCommand();
 ```csharp
 using ObservableCollections;
 using R3;
-using R3Utility;
+using R3Utility.ObservableCollections;
 
 ObservableList<Item> collection = [];
 Item item1 = new() { Name = "foo" };
@@ -114,11 +143,12 @@ disposable.Dispose();
 
 ```
 dotnet add package R3Utility
+dotnet add package R3Utility.ObservableCollections
+dotnet add package R3Utility.WinForms
 ```
 
 ## License
 R3Utility is distributed under a free and open-source license. Feel free to use it in your projects!
-
 
 ## Contributions
 We welcome contributions to the R3Utility project! If you have any suggestions, bug reports, or feature requests, please feel free to open an issue or submit a pull request.
