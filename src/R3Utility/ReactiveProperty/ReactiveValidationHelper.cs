@@ -116,9 +116,13 @@ public static class ReactiveValidationHelper
         var errorObservables = properties
                                 .Select(prop =>
                                 {
+                                    if (!prop.IsValidationEnabled)
+                                    {
+                                        throw new ArgumentException($"Property must have EnableValidation() called.", nameof(properties));
+                                    }
                                     if (forceInitialNotification)
                                     {
-                                        prop.OnNext(prop.Value); // Force initial notification
+                                        prop.OnNext(prop.Value);
                                     }
                                     return Observable.EveryValueChanged(prop, x => x.HasErrors);
                                 });

@@ -143,4 +143,30 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         canExecute.ShouldBeTrue();
         d.Dispose();
     }
+
+    [Fact]
+    public void CreateCanExecuteSource_ShouldThrow_ArgumentNullException_WhenPropertiesAreNull()
+    {
+        Should.Throw<ArgumentNullException>(() => ReactiveValidationHelper.CreateCanExecuteSource(null!));
+    }
+
+    [Fact]
+    public void CreateCanExecuteSource_ShouldThrow_ArgumentNullException_WhenPropertiesAreEmpty()
+    {
+        Should.Throw<ArgumentNullException>(() => ReactiveValidationHelper.CreateCanExecuteSource());
+    }
+
+    [Fact]
+    public void CreateCanExecuteSource_ShouldThrow_WhenPropertyValidationNotEnabled()
+    {
+        var propertyWithoutValidation = new BindableReactiveProperty<int>();
+
+        var exception = Should.Throw<ArgumentException>(() =>
+        {
+            var source = ReactiveValidationHelper.CreateCanExecuteSource(StringBRP, IntBRP, propertyWithoutValidation);
+            source.ToReactiveCommand();
+        });
+
+        exception.Message.ShouldContain("EnableValidation()");
+    }
 }
