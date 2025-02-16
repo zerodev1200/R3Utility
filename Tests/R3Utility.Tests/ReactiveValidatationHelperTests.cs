@@ -13,11 +13,11 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         bool result = false;
         var d = combined.Subscribe(value => result = value);
 
-        result.Should().BeTrue("because all source values are false");
+        result.ShouldBeTrue("because all source values are false");
 
         // Change one value to true and check
         subject1.OnNext(true);
-        result.Should().BeFalse("because one of the source values is true");
+        result.ShouldBeFalse("because one of the source values is true");
 
         subject1.Dispose();
         subject2.Dispose();
@@ -34,11 +34,11 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         bool result = false;
         var d = combined.Subscribe(value => result = value);
 
-        result.Should().BeTrue("because all source values are true");
+        result.ShouldBeTrue("because all source values are true");
 
         // Change one value to false and check
         subject2.OnNext(false);
-        result.Should().BeFalse("because one of the source values is false");
+        result.ShouldBeFalse("because one of the source values is false");
 
         subject1.Dispose();
         subject2.Dispose();
@@ -54,11 +54,11 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
 
         bool result = false;
         var d = combined.Subscribe(value => result = value);
-        result.Should().BeTrue("because one of the source values is false");
+        result.ShouldBeTrue("because one of the source values is false");
 
         // Change both values to true and check
         subject2.OnNext(true);
-        result.Should().BeFalse("because all source values are now true");
+        result.ShouldBeFalse("because all source values are now true");
 
         subject1.Dispose();
         subject2.Dispose();
@@ -75,11 +75,11 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         bool result = false;
         var d = combined.Subscribe(value => result = value);
 
-        result.Should().BeTrue("because one of the source values is true");
+        result.ShouldBeTrue("because one of the source values is true");
 
         // Change both values to false and check
         subject2.OnNext(false);
-        result.Should().BeFalse("because all source values are now false");
+        result.ShouldBeFalse("because all source values are now false");
 
         subject1.Dispose();
         subject2.Dispose();
@@ -90,6 +90,7 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
     public BindableReactiveProperty<int> IntBRP { get; set; } = new BindableReactiveProperty<int>().EnableValidation<ReactiveValidationHelperTests>();
     [Required]
     public BindableReactiveProperty<string> StringBRP { get; set; } = new BindableReactiveProperty<string>("").EnableValidation<ReactiveValidationHelperTests>();
+    
     [Fact]
     public void CreateCanExecuteSource_ShouldReturnFalse_WhenAnyPropertyHasErrors()
     {
@@ -102,11 +103,11 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         StringBRP.Value = "aaa";
 
         fixture.FrameProvider.Advance();
-        canExecute.Should().BeTrue();
+        canExecute.ShouldBeTrue();
 
         IntBRP.Value = 11;
         fixture.FrameProvider.Advance();
-        canExecute.Should().BeFalse();
+        canExecute.ShouldBeFalse();
 
         d.Dispose();
     }
@@ -122,7 +123,7 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         StringBRP.Value = "";
 
         fixture.FrameProvider.Advance();
-        canExecute.Should().BeFalse();
+        canExecute.ShouldBeFalse();
 
         d.Dispose();
     }
@@ -139,7 +140,7 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         StringBRP.Value = "aaa";
 
         fixture.FrameProvider.Advance();
-        canExecute.Should().BeTrue();
+        canExecute.ShouldBeTrue();
         d.Dispose();
     }
 }

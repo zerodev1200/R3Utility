@@ -12,16 +12,16 @@ public class ReactivePropertyExtensionsTests
             x => x.Value,
             pushCurrentValueOnSubscribe: true);
 
-        bindable.Value.Should().Be(10);
-        testObject.Value.Should().Be(10);
+        bindable.Value.ShouldBe(10);
+        testObject.Value.ShouldBe(10);
 
         testObject.Value = 25;
-        bindable.Value.Should().Be(25);
-        testObject.Value.Should().Be(25);
+        bindable.Value.ShouldBe(25);
+        testObject.Value.ShouldBe(25);
 
         bindable.Value = 100;
-        testObject.Value.Should().Be(100);
-        bindable.Value.Should().Be(100);
+        testObject.Value.ShouldBe(100);
+        bindable.Value.ShouldBe(100);
 
         bindable.Dispose();
     }
@@ -37,32 +37,32 @@ public class ReactivePropertyExtensionsTests
             y => y.NestedIntValue,
             pushCurrentValueOnSubscribe: true);
 
-        outerObject.InnerObject.NestedIntValue.Should().Be(5);
-        bindable.Value.Should().Be(5);
+        outerObject.InnerObject.NestedIntValue.ShouldBe(5);
+        bindable.Value.ShouldBe(5);
 
         bindable.Value = 15;
-        outerObject.InnerObject.NestedIntValue.Should().Be(15);
-        bindable.Value.Should().Be(15);
+        outerObject.InnerObject.NestedIntValue.ShouldBe(15);
+        bindable.Value.ShouldBe(15);
 
         outerObject.InnerObject.NestedIntValue = 75;
-        outerObject.InnerObject.NestedIntValue.Should().Be(75);
-        bindable.Value.Should().Be(75);
+        outerObject.InnerObject.NestedIntValue.ShouldBe(75);
+        bindable.Value.ShouldBe(75);
 
 
         var bindable2 = outerObject.ToTwoWayBindableReactiveProperty(
             x => x.InnerObject,
             y => y.NestedStringValue,
             pushCurrentValueOnSubscribe: true);
-        outerObject.InnerObject.NestedStringValue.Should().Be("aaa");
-        bindable2.Value.Should().Be("aaa");
+        outerObject.InnerObject.NestedStringValue.ShouldBe("aaa");
+        bindable2.Value.ShouldBe("aaa");
 
         bindable2.Value = "sss";
-        outerObject.InnerObject.NestedStringValue.Should().Be("sss");
-        bindable2.Value.Should().Be("sss");
+        outerObject.InnerObject.NestedStringValue.ShouldBe("sss");
+        bindable2.Value.ShouldBe("sss");
 
         outerObject.InnerObject.NestedStringValue = "zzz";
-        outerObject.InnerObject.NestedStringValue.Should().Be("zzz");
-        bindable2.Value.Should().Be("zzz");
+        outerObject.InnerObject.NestedStringValue.ShouldBe("zzz");
+        bindable2.Value.ShouldBe("zzz");
         bindable.Dispose();
     }
 
@@ -79,16 +79,16 @@ public class ReactivePropertyExtensionsTests
             z => z.DeepNestedStringValue,
             pushCurrentValueOnSubscribe: true);
 
-        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.Should().Be("initial");
-        bindable.Value.Should().Be("initial");
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.ShouldBe("initial");
+        bindable.Value.ShouldBe("initial");
 
         bindable.Value = "updated";
-        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.Should().Be("updated");
-        bindable.Value.Should().Be("updated");
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.ShouldBe("updated");
+        bindable.Value.ShouldBe("updated");
 
         outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue = "finish";
-        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.Should().Be("finish");
-        bindable.Value.Should().Be("finish");
+        outerObject.InnerObject.DeepInnerObject.DeepNestedStringValue.ShouldBe("finish");
+        bindable.Value.ShouldBe("finish");
         bindable.Dispose();
     }
 }

@@ -294,9 +294,9 @@ public class ObservableCollectionsExtensionsTests
 
         outer1.InnerObject.NestedIntValue = 100;
 
-        value.Should().Be(100);
-        instance.GetType().Should().Be(typeof(Outer));
-        propertyName.Should().Be("InnerObject.NestedIntValue");
+        value.ShouldBe(100);
+        instance.GetType().ShouldBe(typeof(Outer));
+        propertyName.ShouldBe("InnerObject.NestedIntValue");
         d1.Dispose();
 
         var d2 = source.ObserveElementProperty(x => x.InnerObject, x => x.DeepInnerObject, x => x.DeepNestedIntValue)
@@ -308,9 +308,9 @@ public class ObservableCollectionsExtensionsTests
                        });
         outer1.InnerObject.DeepInnerObject.DeepNestedIntValue = 200;
 
-        value.Should().Be(200);
-        instance.GetType().Should().Be(typeof(Outer));
-        propertyName.Should().Be("InnerObject.DeepInnerObject.DeepNestedIntValue");
+        value.ShouldBe(200);
+        instance.GetType().ShouldBe(typeof(Outer));
+        propertyName.ShouldBe("InnerObject.DeepInnerObject.DeepNestedIntValue");
         d2.Dispose();
     }
 }
