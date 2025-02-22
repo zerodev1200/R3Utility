@@ -90,7 +90,7 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
     public BindableReactiveProperty<int> IntBRP { get; set; } = new BindableReactiveProperty<int>().EnableValidation<ReactiveValidationHelperTests>();
     [Required]
     public BindableReactiveProperty<string> StringBRP { get; set; } = new BindableReactiveProperty<string>("").EnableValidation<ReactiveValidationHelperTests>();
-    
+
     [Fact]
     public void CreateCanExecuteSource_ShouldReturnFalse_WhenAnyPropertyHasErrors()
     {
@@ -168,5 +168,31 @@ public class ReactiveValidationHelperTests(TestFixture fixture) : IClassFixture<
         });
 
         exception.Message.ShouldContain("EnableValidation()");
+    }
+
+    [Fact]
+    public void CreateCanExecuteSource_WithForceValidationOnStart_ShouldReturnFalseInitially()
+    {
+        var source = ReactiveValidationHelper.CreateCanExecuteSource(true, StringBRP);
+        bool canExecute = true;
+        
+        var d = source.Subscribe(value => canExecute = value);
+        
+        fixture.FrameProvider.Advance();
+        canExecute.ShouldBeFalse();
+        d.Dispose();
+    }
+
+    [Fact]
+    public void CreateCanExecuteSource_WithoutForceValidationOnStart_ShouldReturnTrueInitially()
+    {
+        var source = ReactiveValidationHelper.CreateCanExecuteSource(false, StringBRP);
+        bool canExecute = false;
+
+        var d = source.Subscribe(value => canExecute = value);
+
+        fixture.FrameProvider.Advance();
+        canExecute.ShouldBeTrue();
+        d.Dispose();
     }
 }
