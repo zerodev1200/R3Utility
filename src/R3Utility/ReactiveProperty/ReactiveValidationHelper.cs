@@ -103,10 +103,10 @@ public static class ReactiveValidationHelper
     /// Returns true only when HasErrors is false for all properties.
     /// </summary>
     /// <param name="properties">Array of BindableReactiveProperty instances to monitor</param>
-    /// <param name="forceInitialNotification">If true, forces the initial notification for each property.</param>
+    /// <param name="forceValidationOnStart">If true, forces the initial notification for each property.</param>
     /// <returns>An Observable&lt;bool&gt; that emits true when all properties have no errors, false otherwise</returns>
     /// <exception cref="ArgumentNullException">Thrown when properties array is null or empty</exception>
-    public static Observable<bool> CreateCanExecuteSource(bool forceInitialNotification = true, params IBindableReactiveProperty[] properties)
+    public static Observable<bool> CreateCanExecuteSource(bool forceValidationOnStart = true, params IBindableReactiveProperty[] properties)
     {
         if (properties == null || properties.Length == 0)
         {
@@ -120,7 +120,7 @@ public static class ReactiveValidationHelper
                                     {
                                         throw new ArgumentException($"Property must have EnableValidation() called.", nameof(properties));
                                     }
-                                    if (forceInitialNotification)
+                                    if (forceValidationOnStart)
                                     {
                                         prop.OnNext(prop.Value);
                                     }
