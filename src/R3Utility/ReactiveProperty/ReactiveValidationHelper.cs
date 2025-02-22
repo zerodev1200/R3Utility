@@ -114,17 +114,17 @@ public static class ReactiveValidationHelper
         }
         // Create observables for HasErrors of each property
         var errorObservables = properties
-                                .Select(prop =>
+                                .Select(property =>
                                 {
-                                    if (!prop.IsValidationEnabled)
+                                    if (!property.IsValidationEnabled)
                                     {
                                         throw new ArgumentException($"Property must have EnableValidation() called.", nameof(properties));
                                     }
                                     if (forceValidationOnStart)
                                     {
-                                        prop.OnNext(prop.Value);
+                                        property.OnNext(property.Value);
                                     }
-                                    return Observable.EveryValueChanged(prop, x => x.HasErrors);
+                                    return Observable.EveryValueChanged(property, x => x.HasErrors);
                                 });
         return errorObservables.CombineLatestValuesAreAllFalse();
     }
